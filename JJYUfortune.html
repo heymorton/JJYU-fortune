@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>今日啾势</title>
+
+<style>
+
+body{
+background:#0b0b1a;
+color:#f5e6c8;
+font-family:Georgia,serif;
+text-align:center;
+margin:0;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:30px 20px;
+}
+
+.main-title{
+font-size:clamp(42px,10vw,70px);
+letter-spacing:4px;
+color:#f5e6c8;
+text-shadow:0 0 20px #d4af37;
+}
+
+.sub-title{
+color:#cbb78c;
+margin-top:-10px;
+}
+
+.divider{
+margin:20px 0;
+color:#d4af37;
+}
+
+.description{
+margin-bottom:30px;
+}
+
+#quiz p{
+margin:15px 0 5px;
+}
+
+select{
+width:80%;
+padding:10px;
+border-radius:8px;
+border:1px solid #d4af37;
+background:#14142a;
+color:white;
+}
+
+.card{
+width:220px;
+height:340px;
+margin:40px auto;
+background:linear-gradient(145deg,#1f1f3d,#2e2e5a);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+border:2px solid #d4af37;
+box-shadow:0 0 25px rgba(212,175,55,0.5);
+transition:0.6s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+#result{
+margin-top:30px;
+padding:20px;
+border:1px solid #d4af37;
+border-radius:12px;
+background:rgba(0,0,0,0.4);
+}
+
+.result-title{
+font-size:24px;
+color:#d4af37;
+margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="main-title">🔮 今日啾势</h1>
+<p class="sub-title">Jiwoo Daily Fortune</p>
+
+<div class="divider">✦ ✦ ✦</div>
+
+<p class="description">回答5个问题抽取今日运势</p>
+
+<div id="quiz">
+
+<p>1 今天的心情</p>
+<select>
+<option>开心</option>
+<option>平静</option>
+<option>有点累</option>
+<option>兴奋</option>
+</select>
+
+<p>2 今天的天气</p>
+<select>
+<option>阳光</option>
+<option>微风</option>
+<option>雨天</option>
+<option>夜晚</option>
+</select>
+
+<p>3 想听什么类型的歌</p>
+<select id="musicType">
+<option>舞曲</option>
+<option>抒情</option>
+<option>慢歌</option>
+<option>轻快</option>
+</select>
+
+<p>4 今天想要的感觉</p>
+<select>
+<option>治愈</option>
+<option>活力</option>
+<option>神秘</option>
+<option>温柔</option>
+</select>
+
+<p>5 今天更像什么颜色</p>
+<select>
+<option>白色</option>
+<option>粉色</option>
+<option>黑色</option>
+<option>蓝色</option>
+<option>绿色</option>
+<option>紫色</option>
+<option>黄色</option>
+<option>红色</option>
+<option>银色</option>
+</select>
+
+</div>
+
+<div class="card" onclick="drawFortune()">
+🃏 点击翻开塔罗
+</div>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const colors=[
+"白色","粉色","黑色","蓝色","绿色","紫色","黄色","红色","银色"
+]
+
+const yi=[
+"听音乐","散步","追星","拍照","喝咖啡","看舞台","刷视频"
+]
+
+const ji=[
+"熬夜","emo","拖延","不吃饭","压力过大"
+]
+
+const songs={
+
+舞曲:[
+"New Jeans - Super Shy",
+"IVE - Love Dive",
+"Aespa - Drama",
+"Blackpink - Pink Venom"
+],
+
+抒情:[
+"IU - Love Poem",
+"Taeyeon - Fine",
+"Baekhyun - Bambi",
+"Heize - And July"
+],
+
+慢歌:[
+"AKMU - How can I love",
+"Paul Kim - Every Day Every Moment",
+"Crush - Beautiful"
+],
+
+轻快:[
+"New Jeans - Hype Boy",
+"STAYC - ASAP",
+"IVE - After Like",
+"Red Velvet - Red Flavor"
+]
+
+}
+
+function random(arr){
+return arr[Math.floor(Math.random()*arr.length)]
+}
+
+function drawFortune(){
+
+const today=new Date().toDateString()
+
+if(localStorage.getItem("fortuneDate")==today){
+alert("今天已经抽过啾势啦 ✨")
+return
+}
+
+localStorage.setItem("fortuneDate",today)
+
+const luckyColor=random(colors)
+
+const luckyNumber=Math.floor(Math.random()*99)+1
+
+const stage="#JJYU"+Math.floor(Math.random()*9000+1000)
+
+const musicType=document.getElementById("musicType").value
+
+const song=random(songs[musicType])
+
+const yiThing=random(yi)
+
+const jiThing=random(ji)
+
+document.getElementById("result").innerHTML=`
+
+<div class="result-title">✨ 今日啾势</div>
+
+<p>🎨 幸运色：${luckyColor}</p>
+
+<p>🎤 今日舞台：${stage}</p>
+
+<p>💿 推荐歌曲：${song}</p>
+
+<p>🔢 幸运数字：${luckyNumber}</p>
+
+<p>🚶 今日宜：${yiThing}</p>
+
+<p>⚠ 今日忌：${jiThing}</p>
+
+`
+
+}
+
+</script>
+
+</body>
+</html>
